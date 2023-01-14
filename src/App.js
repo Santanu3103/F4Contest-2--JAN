@@ -1,24 +1,58 @@
-import logo from './logo.svg';
+import React,{useEffect,useState} from 'react'
 import './App.css';
+import CounterComponent from './Component/CounterComponent'
 
 function App() {
+  const[count,setCounter]=useState(0);
+  const [displayTxt,setDisplayText] = useState(false);
+  const [displayBtn,setDisplayBtn] = useState(false);
+
+  useEffect(()=>{
+    console.log(`count on every update ${count}`);  
+  })
+const increase = ()=>{
+  setCounter(count => count+1);
+  if (count>=0 && count<9){
+
+    setDisplayText(false);
+    setDisplayBtn(false);
+
+  }else if( count>=9){
+  setDisplayBtn(true);
+ } 
+   
+ 
+}
+
+const decrease = ()=>{
+  setCounter(count=> count-1);
+  if (count<=0) {
+    setDisplayText(true);
+    setCounter(0);
+  }else if(count>=0 && count<=10 ){
+    setDisplayBtn(false);
+  }
+
+
+}
+
+const zero = ()=>{
+  setCounter(0);
+  setDisplayBtn(false);
+}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <div className='app'>
+     <CounterComponent 
+     count={count} 
+     decrease={decrease}
+     increase={increase} 
+     zero={zero} 
+     displayTxt={displayTxt} 
+     displayBtn={displayBtn}
+     />
+    
+    </div>   
   );
 }
 
